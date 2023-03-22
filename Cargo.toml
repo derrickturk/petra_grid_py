@@ -9,7 +9,6 @@ name = "petra_grid"
 crate-type = ["cdylib"]
 
 [dependencies]
-ndarray = "0.15.6"
+numpy = "0.18.0"
 petra_grid = "1.0.0"
 pyo3 = { version = "0.18.1", features = ["extension-module"] }
-rust-numpy = "0.1.0"

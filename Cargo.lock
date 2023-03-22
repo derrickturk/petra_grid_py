@@ -27,12 +27,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "impl_ops"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90f97a5f38dd3ccfbe7aa80f4a0c00930f21b922c74195be0201c51028f22dcf"
-
-[[package]]
 name = "indoc"
 version = "1.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -114,6 +108,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "numpy"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "96b0fee4571867d318651c24f4a570c3f18408cf95f16ccb576b3ce85496a46e"
+dependencies = [
+ "libc",
+ "ndarray",
+ "num-complex",
+ "num-integer",
+ "num-traits",
+ "pyo3",
+ "rustc-hash",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.17.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -157,10 +166,9 @@ dependencies = [
 name = "petra_grid_py"
 version = "0.1.0"
 dependencies = [
- "ndarray",
+ "numpy",
  "petra_grid",
  "pyo3",
- "rust-numpy",
 ]
 
 [[package]]
@@ -257,13 +265,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust-numpy"
-version = "0.1.0"
+name = "rustc-hash"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7867112124dcd4b9209d74c4748e10566035a3bd3d55b96d32a7b9bce328b7cb"
-dependencies = [
- "impl_ops",
-]
+checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 
 [[package]]
 name = "scopeguard"

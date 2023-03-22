@@ -4,6 +4,8 @@ use pyo3::{
     types::PyDateTime,
 };
 
+use numpy::ToPyArray;
+
 mod filey;
 use filey::Filey;
 
@@ -197,10 +199,18 @@ impl Grid {
         self.0.rlat
     }
 
-    /*
     /// the actual grid data, according to its inferred format
-    pub data: ArrayD<f64>,
-    */
+    #[getter]
+    fn data(&self) -> PyObject {
+        Python::with_gil(|py| {
+            match &self.0.data {
+                petra_grid::GridData::Rectangular(arr) =>
+                    arr.to_pyarray(py).into(),
+                petra_grid::GridData::Triangular(arr) =>
+                    arr.to_pyarray(py).into(),
+            }
+        })
+    }
 }
 
 /// read a Petra grid from a file path or file-like object
