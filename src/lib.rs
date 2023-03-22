@@ -199,7 +199,34 @@ impl Grid {
         self.0.rlat
     }
 
-    /// the actual grid data, according to its inferred format
+    /// the actual grid data, as a numpy array
+    ///
+    /// this may be a rectangular or triangular grid; see the is_rectangular
+    /// and is_triangular methods, or check n_triangles
+    ///
+    /// rectangular grids will have shape (rows x columns)
+    /// for rectangular grids, each data element is a measurement in the *z*
+    /// dimension; the *x* and *y* values are implicit (see the `xmin`, ...)
+    /// attributes in `Grid`
+    ///
+    /// Petra stores the data in row-major form, with the values in each row
+    /// proceeding along the *x* dimension from east to west, and the rows
+    /// themselves proceeding along the *y* dimension from south to north
+    /// (that is, the values of *y* increase for each row in order, and the
+    /// "origin" is at the "lower left")
+    ///
+    /// note that many "computer graphics" applications and libraries expect
+    /// the opposite convention for the *y* axis (origin at the upper left);
+    /// you may wish to use e.g. `numpy.flip(grid.data, axis=0)` for these
+    /// applications, or to use application-specific options (like passing
+    /// `origin='lower'` to `matplotlib.pyplot.imshow`)
+    ///
+    /// triangular grids will have shape
+    /// (n_triangles x 3 vertices x 3 dimensions)
+    /// each triangle is represented as (*x*, *y*, *z*) triplets; we think
+    /// (but haven't verified) that triangles are stored with their vertices in
+    /// counterclockwise order, because they seem to work properly
+    /// with `matplotlib.tri.Triangulation`
     #[getter]
     fn data(&self) -> PyObject {
         Python::with_gil(|py| {
