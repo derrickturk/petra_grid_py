@@ -1,5 +1,8 @@
 import datetime
 
+import numpy as np
+import numpy.typing as npt
+
 from typing import BinaryIO, ClassVar, Union
 
 
@@ -91,7 +94,7 @@ class Grid:
     def rlat(self) -> float: ...
 
     @property
-    def data(self) -> object: ...
+    def data(self) -> npt.NDArray[np.float64]: ...
 
     @property
     def is_rectangular(self) -> bool: ...
