@@ -35,7 +35,7 @@ use filey::Filey;
 /// the only known values are:
 ///   - `UnitOfMeasure.Feet`
 ///   - `UnitOfMeasure.Meters`
-#[pyclass]
+#[pyclass(module="petra_grid")]
 #[derive(Copy, Clone, Debug)]
 pub enum UnitOfMeasure {
     /// feet
@@ -54,7 +54,7 @@ impl From<petra_grid::UnitOfMeasure> for UnitOfMeasure {
 }
 
 /// a Petra grid
-#[pyclass]
+#[pyclass(module="petra_grid")]
 #[derive(Clone, Debug)]
 pub struct Grid(petra_grid::Grid);
 
@@ -280,6 +280,12 @@ impl Grid {
             petra_grid::GridData::Triangular(_) => true,
             _ => false,
         }
+    }
+
+    /// get a debug-friendly representation of the underlying Rust
+    /// petra_grid::Grid struct
+    fn __repr__(&self) -> String {
+        format!("{:?}", self.0)
     }
 }
 

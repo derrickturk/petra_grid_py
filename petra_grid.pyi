@@ -2,12 +2,14 @@ import datetime
 
 from typing import BinaryIO, ClassVar, Union
 
+
 class UnitOfMeasure:
     Feet: ClassVar['UnitOfMeasure']
     '''feet'''
 
     Meters: ClassVar['UnitOfMeasure']
     '''meters'''
+
 
 class Grid:
     @property
@@ -96,5 +98,8 @@ class Grid:
 
     @property
     def is_triangular(self) -> bool: ...
+
+    def __repr__(self) -> str: ...
+
 
 def read_grid(name_or_file_like: Union[str, BinaryIO]) -> Grid: ...
