@@ -31,6 +31,10 @@ mod filey;
 use filey::Filey;
 
 /// units of measure for a given dimension
+///
+/// the only known values are:
+///   - `UnitOfMeasure.Feet`
+///   - `UnitOfMeasure.Meters`
 #[pyclass]
 #[derive(Copy, Clone, Debug)]
 pub enum UnitOfMeasure {
@@ -222,8 +226,8 @@ impl Grid {
 
     /// the actual grid data, as a numpy array
     ///
-    /// this may be a rectangular or triangular grid; see the is_rectangular
-    /// and is_triangular methods, or check n_triangles
+    /// this may be a rectangular or triangular grid; see the `is_rectangular`
+    /// and `is_triangular` methods, or check `n_triangles`
     ///
     /// rectangular grids will have shape (rows x columns)
     /// for rectangular grids, each data element is a measurement in the *z*
@@ -249,7 +253,7 @@ impl Grid {
     /// counterclockwise order, because they seem to work properly
     /// with `matplotlib.tri.Triangulation`
     #[getter]
-    fn data(&self) -> PyObject {
+    fn get_data(&self) -> PyObject {
         Python::with_gil(|py| {
             match &self.0.data {
                 petra_grid::GridData::Rectangular(arr) =>
@@ -258,6 +262,24 @@ impl Grid {
                     arr.to_pyarray(py).into(),
             }
         })
+    }
+
+    /// is this a rectangular grid?
+    #[getter]
+    fn get_is_rectangular(&self) -> bool {
+        match &self.0.data {
+            petra_grid::GridData::Rectangular(_) => true,
+            _ => false,
+        }
+    }
+
+    /// is this a triangular grid?
+    #[getter]
+    fn get_is_triangular(&self) -> bool {
+        match &self.0.data {
+            petra_grid::GridData::Triangular(_) => true,
+            _ => false,
+        }
     }
 }
 
